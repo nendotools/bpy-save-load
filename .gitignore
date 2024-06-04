@@ -1,0 +1,6 @@
+settings.json
+bin
+deploy.sh
+__pycache__/
+venv
+.venv
