@@ -1,23 +1,7 @@
-# ##### BEGIN GPL LICENSE BLOCK #####
-#
-#  This program is free software; you can redistribute it and/or
-#  modify it under the terms of the GNU General Public License
-#  as published by the Free Software Foundation; either version 2
-#  of the License, or (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software Foundation,
-#  Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-#
-# ##### END GPL LICENSE BLOCK #####
 import bpy
 
-from .preferences import Preferences
+from .operators import AddMenuItemOperator, RemoveMenuItemOperator
+from .preferences import CustomProperties, Preferences
 
 bl_info = {
     "name": "Example Save Load",
@@ -34,8 +18,10 @@ bl_info = {
 }
 
 
-has_run = False
 def register():
+    bpy.utils.register_class(AddMenuItemOperator)
+    bpy.utils.register_class(RemoveMenuItemOperator)
+    bpy.utils.register_class(CustomProperties)
     bpy.utils.register_class(Preferences)
     bpy.context.preferences.addons[__package__.split('.')[0]].preferences.load() # type: ignore
 
@@ -43,3 +29,6 @@ def register():
 def unregister():
     bpy.context.preferences.addons[__package__.split('.')[0]].preferences.save() # type: ignore
     bpy.utils.unregister_class(Preferences)
+    bpy.utils.unregister_class(CustomProperties)
+    bpy.utils.unregister_class(RemoveMenuItemOperator)
+    bpy.utils.unregister_class(AddMenuItemOperator)
