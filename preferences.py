@@ -1,4 +1,6 @@
 # type: ignore 
+import json
+from os import path
 
 from bpy.types import AddonPreferences, PropertyGroup, Context
 from bpy.props import (
@@ -83,9 +85,51 @@ class Preferences(AddonPreferences):
                 r.prop(item, "int_prop")
                 r.operator("wm.remove_menu_item", text="Remove").index = index
 
+    def to_dict(self):
+        return {
+            "string_pref": self.string_pref,
+            "int_pref": self.int_pref,
+            "float_pref": self.float_pref,
+            "bool_pref": self.bool_pref,
+            "color_pref": list(self.color_pref),
+            "coordinate_pref": list(self.coordinate_pref),
+            "name_number_sets": [
+                {
+                    "string_prop": item.string_prop,
+                    "int_prop": item.int_prop
+                }
+                for item in self.name_number_sets
+            ]
+        }
+
+    def from_dict(self, data):
+        self.string_pref = data.get("string_pref", "")
+        self.int_pref = data.get("int_pref", 0)
+        self.float_pref = data.get("float_pref", 0.0)
+        self.bool_pref = data.get("bool_pref", False)
+        self.color_pref = data.get("color_pref", (0.7, 0.7, 0.7, 1.0))
+        self.coordinate_pref = data.get("coordinate_pref", (0.0, 0.0, 0.0))
+        self.name_number_sets.clear()
+
+        if "name_number_sets" not in data:
+            return
+        for item in data.get("name_number_sets", []):
+            new_item = self.name_number_sets.add()
+            new_item.string_prop = item.get("string_prop", "")
+            new_item.int_prop = item.get("int_prop", 0)
 
     def save(self):
-        print("Saved")
+        data = self.to_dict()
+        file = path.abspath(path.dirname(__file__) + "/preferences.json")
+        with open(file, "w") as file:
+            json.dump(data, file, indent=4)
     
     def load(self):
-        print("Loaded")
+        # check file exists
+        file = path.abspath(path.dirname(__file__) + "/preferences.json")
+        try:
+            with open(file, "r") as file:
+                data = json.load(file)
+                self.from_dict(data)
+        except:
+            return None

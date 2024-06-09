@@ -1,0 +1,35 @@
+{
+    "string_pref": "cheesecake",
+    "int_pref": 129302183,
+    "float_pref": 0.0,
+    "bool_pref": false,
+    "color_pref": [
+        0.7003662586212158,
+        0.16553717851638794,
+        0.09218651056289673,
+        1.0
+    ],
+    "coordinate_pref": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "name_number_sets": [
+        {
+            "string_prop": "ham",
+            "int_prop": 41
+        },
+        {
+            "string_prop": "rwefsadz",
+            "int_prop": 233
+        },
+        {
+            "string_prop": "342rwe",
+            "int_prop": -219
+        },
+        {
+            "string_prop": "43qrwaf",
+            "int_prop": 117
+        }
+    ]
+}
