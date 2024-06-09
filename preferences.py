@@ -62,7 +62,7 @@ class Preferences(AddonPreferences):
         type=CustomProperties
     )
 
-    def draw(self, context: Context):
+    def draw(self, _: Context):
         layout = self.layout
         layout.label(text="This is an example of how to save and load settings in Blender.")
 
