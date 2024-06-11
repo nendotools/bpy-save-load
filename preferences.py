@@ -28,6 +28,7 @@ class Preferences(AddonPreferences):
     string_pref: StringProperty(
         name="String",
         default="",
+        update=lambda self, _: self.save()
     )
 
     int_pref: IntProperty(
